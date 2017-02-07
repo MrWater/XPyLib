@@ -52,7 +52,6 @@ class CurlLib:
 			if header[0] == 'Location':
 				ret['location'] = header[1]
 			elif header[0] == 'Set-Cookie':
-				print(header[1])
 				cookiespool.CookiesPool().set(header[1])
 
 		if print_response:

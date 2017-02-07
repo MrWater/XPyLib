@@ -3,3 +3,4 @@ import spider.cookie.cookiespool as cookiespool
 
 c = lib.CurlLib()
 c.get("http://www.baidu.com")
+print(str(cookiespool.CookiesPool()))
