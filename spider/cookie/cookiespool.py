@@ -1,10 +1,12 @@
-# !/user/bin/env python
+# !/user/bin/python
 # -*- coding:utf-8 -*-
 
 import threading
 
 class CookiesPool:
-	"""This is a pool for storing and reading cookies"""
+	"""
+	This is a pool for storing and reading cookies
+	"""
 
 	__lock = threading.Lock()
 	__instance = None
@@ -24,8 +26,24 @@ class CookiesPool:
 
 		return cls.__instance
 
+	def __str__(self):
+		s = ''
+
+		for key in self.__cookies.keys():
+			s += key + ' = ' + self.__cookies[key] + '\n'
+
+		return s
+
 	def get(self, *cookie_key):
-		"""Get values according to keys"""
+		"""
+		Get values according to keys
+
+		Args:
+			*cookie_key: a tuple that contains keys for getting cookie
+
+		Returns
+		"""
+
 		cks = {}
 
 		for k in cookie_key:
@@ -35,16 +53,17 @@ class CookiesPool:
 		return cks
 
 	def set(self, cookies_str):
-		"""Get right cookies from cookies string"""
-		arr = cookies_str.split(',')
+		"""
+		Get right cookies from cookies string
+		
+		Args:
+			cookie_str: it is always the string gotten from response headers that likes 'jessionid:123saf123sfs; path='
+		"""
 
-		for item in arr:
-			key = item[:item.find('=')]
-			value = item[item.find('=')+1:]
+		key = cookies_str[:cookies_str.find('=')]
+		value = cookies_str[cookies_str.find('=')+1:]
 
-			if str.__contains__(value, '; path'):
-				value = value[:value.find('; path')]
-			if str.__contains__(value, ';path'):
-				value = value[:value.find(';path')]
+		if str.__contains__(value, ';'):
+			value = value[:value.find(';')]
 
-			self.__cookies[key] = value
+		self.__cookies[key] = value

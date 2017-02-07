@@ -1,5 +1,5 @@
-import spider.cookie.cookiespool as cookie
+import spider.curl.curllib as lib
+import spider.cookie.cookiespool as cookiespool
 
-c = cookie.CookiesPool()
-c.set("jessionid=123123123; path=")
-print(c.get())
+c = lib.CurlLib()
+c.get("http://www.baidu.com")
