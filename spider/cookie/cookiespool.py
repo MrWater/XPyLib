@@ -1,6 +1,8 @@
 # !/user/bin/python
 # -*- coding:utf-8 -*-
 
+# TODO: Add exception judgement
+
 import threading
 
 class CookiesPool:
@@ -38,7 +40,7 @@ class CookiesPool:
 		"""
 		Get values according to keys
 
-		Args:
+		Params:
 			*cookie_key: a tuple that contains keys for getting cookie
 
 		Returns
@@ -57,7 +59,7 @@ class CookiesPool:
 		"""
 		Get right cookies from cookies string
 		
-		Args:
+		Params:
 			cookie_str: it is always the string gotten from response headers that likes 'jessionid:123saf123sfs; path='
 		"""
 

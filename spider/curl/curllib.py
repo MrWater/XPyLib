@@ -1,6 +1,8 @@
 # !/user/bin/python
 # -*- coding:utf-8 -*-
 
+# TODO: Add exception judgement
+
 import urllib
 import http.client
 import spider.cookie.cookiespool as cookiespool
@@ -17,7 +19,7 @@ class CurlLib:
 		"""
 		Set the proxy
 
-		Args:
+		Params:
 			model: the model of proxy, e.g. http
 			address: the ip of proxy
 			port: the port of proxy
@@ -33,10 +35,13 @@ class CurlLib:
 		"""
 		Http-Get method
 
-		Args:
+		Params:
 			url: target url 
 			cookie: e.g. {'JESSIONID', '********'}
 			print_response: whether to print the response or not
+
+		Return:
+			dict:{ 'response':'****', 'location':'***'}
 		"""
 
 		ret = {'response':'', 'location':''}
@@ -75,18 +80,71 @@ class CurlLib:
 
 		return ret
 
+	def post(self, url, data, cookies={}, print_response=False):
+		"""
+		Http-Post method
+
+		Params:
+			url:target url 
+			data:the reqeust data. e.g. {'id':'1', 'password':'2'}
+			cookie: e.g. {'JESSIONID', '********'}
+			print_response: whether to print the response or not
+
+		Return:
+			dict:{ 'response':'****', 'location':'***'}
+		"""
+
+		ret = {'response':'', 'location':''}
+
+		if not isinstance(cookies, dict):
+			return ret
+
+		cookie = cookiejar.CookieJar()
+		req = urllib.request.Request(url, urllib.parse.urlencode(data).encode())
+		s = url[url.find('/')+2:]
+
+		if str.__contains__(s, ':'):
+			s = s[:s.find(':')-1]
+		else:
+			s = s[:s.find('/')-1]
+
+		for c in cookies.keys():
+			cookie.set_cookie(__make_cookie(c, cookies[c], s))
+
+		cookie_processor = urllib.request.HTTPCookieProcessor(cookie)
+		opener = urllib.request.build_opener(cookie_processor)
+		urllib.request.install_opener(opener)
+
+		response = urllib.request.urlopen(req)
+		ret['response'] = response.read()
+		headers = http.client.HTTPResponse.getheaders(response)
+
+		for header in headers:
+			if header[0] == 'Location':
+				ret['location'] = header[1]
+			elif header[0] == 'Set-Cookie':
+				cookiespool.CookiesPool().set(header[1])
+
+		if print_response:
+			print(ret['response'])
+
+		return ret
+
 	def __make_cookie(name, value, domain):
 		"""
 		Make a cookie with name, value and domain
+
+		Return:
+			cookiejar.Cookie
 		"""
 
-	    return cookielib.Cookie(
+		return cookiejar.Cookie(
 	        version=0,
 	        name=name,
 	        value=value,
 	        port=None,
 	        port_specified=False,
-	        domain="xxxxx",
+	        domain=domain,
 	        domain_specified=True,
 	        domain_initial_dot=False,
 	        path="/",
