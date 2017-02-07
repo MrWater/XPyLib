@@ -87,7 +87,7 @@ class CurlLib:
 		Params:
 			url:target url 
 			data:the reqeust data. e.g. {'id':'1', 'password':'2'}
-			cookie: e.g. {'JESSIONID', '********'}
+			cookie: e.g. {'JSESSIONID', '********'}
 			print_response: whether to print the response or not
 
 		Return:
