@@ -14,6 +14,17 @@ class CurlLib:
 	"""
 
 	def set_proxy(model, address, port):
+		"""
+		Set the proxy
+
+		Args:
+			model: the model of proxy, e.g. http
+			address: the ip of proxy
+			port: the port of proxy
+
+			e.g. set_proxy('http', '127.0.0.0', '8000')
+		"""
+
 		proxy = urllib.request.ProxyHandler({model: address+port})
 		opener = urllib.request.build_opener(proxy)
 		urllib.request.install_opener(opener)
@@ -21,6 +32,11 @@ class CurlLib:
 	def get(self, url, cookies={}, print_response=False):
 		"""
 		Http-Get method
+
+		Args:
+			url: target url 
+			cookie: e.g. {'JESSIONID', '********'}
+			print_response: whether to print the response or not
 		"""
 
 		ret = {'response':'', 'location':''}
@@ -60,6 +76,10 @@ class CurlLib:
 		return ret
 
 	def __make_cookie(name, value, domain):
+		"""
+		Make a cookie with name, value and domain
+		"""
+
 	    return cookielib.Cookie(
 	        version=0,
 	        name=name,

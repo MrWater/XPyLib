@@ -42,6 +42,7 @@ class CookiesPool:
 			*cookie_key: a tuple that contains keys for getting cookie
 
 		Returns
+			dict: e.g. {'JESSIONID':'*********'}
 		"""
 
 		cks = {}
