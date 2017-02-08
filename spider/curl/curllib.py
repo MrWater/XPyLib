@@ -5,6 +5,8 @@
 
 import urllib
 import http.client
+import re
+
 import spider.cookie.cookiespool as cookiespool
 
 from http import cookiejar
@@ -66,7 +68,10 @@ class CurlLib:
 		urllib.request.install_opener(opener)
 
 		response = urllib.request.urlopen(req)
-		ret['response'] = response.read()
+		temp = response.read()
+		match = re.search(r'<meta.*?charset="(.*?)"', str(temp))
+		ret['response'] = temp.decode(match.group(1))
+
 		headers = http.client.HTTPResponse.getheaders(response)
 
 		for header in headers:
@@ -116,7 +121,10 @@ class CurlLib:
 		urllib.request.install_opener(opener)
 
 		response = urllib.request.urlopen(req)
-		ret['response'] = response.read()
+		temp = response.read()
+		match = re.search(r'<meta.*?charset="(.*?)"', str(temp))
+		ret['response'] = temp.decode(match.group(1))
+
 		headers = http.client.HTTPResponse.getheaders(response)
 
 		for header in headers:
