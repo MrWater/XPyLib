@@ -35,7 +35,7 @@ def func():
 		global cnt
 		cnt += 1
 		print("完成" + str(cnt))
-		time.sleep(10)
+		time.sleep(60)
 
 	conn.close()
 
