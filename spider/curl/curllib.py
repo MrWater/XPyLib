@@ -70,7 +70,8 @@ class CurlLib:
 		response = urllib.request.urlopen(req)
 		temp = response.read()
 		match = re.search(r'<meta.*?charset=(.*?)"', str(temp))
-		ret['response'] = temp.decode(match.group(1)) if match != None else temp.decode('utf8')
+		# TODO: need to modify with thinking over the reponse type that maybe json, text, html, .etc and deciding the correct charset
+		ret['response'] = temp.decode(match.group(1)) if match != None else temp.decode('utf8')  
 
 		headers = http.client.HTTPResponse.getheaders(response)
 
