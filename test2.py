@@ -1,5 +1,5 @@
-# !/user/bin/python
-# -*-coding:utf8-*-
+# !/user/bin/env python
+# -*- coding:utf-8 -*-
 
 from bs4 import BeautifulSoup
 import lxml.html
