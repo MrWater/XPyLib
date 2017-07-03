@@ -1,4 +1,4 @@
-# !/user/bin/env python
+#! /usr/bin/env python
 # -*- coding:utf-8 -*-
 
 # TODO: Add exception judgement
